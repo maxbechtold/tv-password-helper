@@ -1,29 +1,31 @@
-import java.util.regex.Pattern
 import kotlin.math.abs
 
 class CharacterDistanceCalculator {
+    private var lowerChars = ThreeRowPane(
+        listOf("q", "w", "e", "r", "t", "z", "u", "i", "o", "p"),
+        listOf("a", "s", "d", "f", "g", "h", "j", "k", "l"),
+        listOf("⇧", "y", "x", "c", "v", "b", "n", "m"))
 
-    private val row1 = listOf("q", "w", "e", "r", "t", "z", "u", "i", "o", "p")
-    private val row2 = listOf("a", "s", "d", "f", "g", "h", "j", "k", "l")
-    private val row3 = listOf("⇧", "y", "x", "c", "v", "b", "n", "m")
-
-    fun getDirectDistance(char1: String, char2: String): Int {
-        return when {
-            row1.contains(char1) -> row1.getRowDistance(char1, char2)
-            row2.contains(char1) -> row2.getRowDistance(char1, char2)
-            else -> row3.getRowDistance(char1, char2)
-        }
-
+    data class ThreeRowPane<T>(val row1: List<T>, val row2: List<T>, val row3: List<T>) {
+        fun getRows() = listOf(row1, row2, row3)
+        fun getRow(id: Int) = getRows()[id]
+        fun findRow(char: String) = getRows().indexOfFirst { row -> row.contains(char) }
     }
-
-    /** Calculate distance. Returns nonsense for items not in the list */
-    private fun List<Any>.getRowDistance(item1: Any, item2: Any): Int = abs(indexOf(item1) - indexOf(item2))
 
     fun sumUpDistance(string: String): Int {
         val chars = string.map { it.toString() }.toList()
         val charPairs = chars.zipWithNext()
 
-        // q,w  w,e
-        return charPairs.fold(0) { sum, pair -> sum + getDirectDistance(pair.first, pair.second) }
+        return charPairs.fold(0) { sum, pair -> sum + getDistance(pair.first, pair.second) }
     }
+
+    fun getDistance(char1: String, char2: String): Int {
+        val rowId1 = lowerChars.findRow(char1)
+        val rowId2 = lowerChars.findRow(char2)
+        val index1 = lowerChars.getRow(rowId1).indexOf(char1)
+        val index2 = lowerChars.getRow(rowId2).indexOf(char2)
+
+        return abs(rowId1 - rowId2) + abs(index1 - index2)
+    }
+
 }
