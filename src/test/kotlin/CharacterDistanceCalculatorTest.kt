@@ -1,8 +1,8 @@
-import KeyboardPaneSwitcher.Const.caseSwitch
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Disabled
 
 internal class CharacterDistanceCalculatorTest {
 
@@ -11,33 +11,6 @@ internal class CharacterDistanceCalculatorTest {
     @BeforeEach
     fun setUp() {
         calculator = CharacterDistanceCalculator()
-    }
-
-    @Test
-    fun `line 1 distance`() {
-        assertEquals(0, calculator.getDistance("q", "q"))
-        assertEquals(1, calculator.getDistance("q", "w"))
-        assertEquals(2, calculator.getDistance("q", "e"))
-
-        assertEquals(9, calculator.getDistance("q", "p"))
-    }
-
-    @Test
-    fun `line 2 distance`() {
-        assertEquals(0, calculator.getDistance("l", "l"))
-        assertEquals(1, calculator.getDistance("k", "l"))
-
-        assertEquals(7, calculator.getDistance("s", "l"))
-        assertEquals(8, calculator.getDistance("a", "l"))
-    }
-
-    @Test
-    fun `line 3 distance`() {
-        assertEquals(0, calculator.getDistance("y", "y"))
-        assertEquals(1, calculator.getDistance("y", "x"))
-
-        assertEquals(1, calculator.getDistance("n", "m"))
-        assertEquals(6, calculator.getDistance("y", "m"))
     }
 
     @Test
@@ -54,16 +27,27 @@ internal class CharacterDistanceCalculatorTest {
         assertEquals(1, calculator.sumUpDistance("aq"))
         assertEquals(2, calculator.sumUpDistance("pl"))
         assertEquals(2, calculator.sumUpDistance("lp"))
-
-        assertEquals(2, calculator.sumUpDistance("q$caseSwitch"))
-        assertEquals(3, calculator.sumUpDistance(caseSwitch +"w"))
     }
 
     @Test
     fun `three line word distance`() {
-        assertEquals(2, calculator.sumUpDistance("qa$caseSwitch"))
+        assertEquals(2, calculator.sumUpDistance("qaq"))
         assertEquals(4, calculator.sumUpDistance("qsx"))
         assertEquals(4, calculator.sumUpDistance("yaw"))
         assertEquals(4, calculator.sumUpDistance("plm"))
+    }
+
+    @Test
+    fun `sample word distance`() {
+        assertEquals(11, calculator.sumUpDistance("trump"))
+        assertEquals(17, calculator.sumUpDistance("biden"))
+    }
+
+    @Disabled
+    @Test
+    fun `two pane distance`() {
+        assertEquals(2, calculator.sumUpDistance("yY"))
+        assertEquals(2, calculator.sumUpDistance("yYy"))
+        assertEquals(2, calculator.sumUpDistance("Yy"))
     }
 }

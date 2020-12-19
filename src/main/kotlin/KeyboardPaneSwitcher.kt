@@ -8,7 +8,8 @@ class KeyboardPaneSwitcher {
     }
 
     companion object Const {
-        const val caseSwitch = "⇧"
+        const val upSwitch = "⇧"
+        const val lowSwitch = "⇩"
     }
 
     fun insertSwitchCharacters(word: String) : String {
@@ -18,8 +19,9 @@ class KeyboardPaneSwitcher {
     private fun getMode(sequence: String): Mode {
         return when {
             sequence.isEmpty() -> Mode.LowerChar
-            sequence.last().isUpperCase() -> Mode.UpperChar
-            sequence.last().isLowerCase() -> Mode.LowerChar
+            // TODO Let pane decide
+            sequence.last().isUpperCase() || sequence.last().toString() == lowSwitch -> Mode.UpperChar
+            sequence.last().isLowerCase() || sequence.last().toString() == upSwitch -> Mode.LowerChar
             else -> throw IllegalArgumentException(sequence)
         }
     }
@@ -31,6 +33,7 @@ class KeyboardPaneSwitcher {
             return it.toString()
         }
 
-        return caseSwitch+it
+        val switchChar = if (it.isLowerCase()) lowSwitch else upSwitch
+        return "$switchChar$it"
     }
 }
