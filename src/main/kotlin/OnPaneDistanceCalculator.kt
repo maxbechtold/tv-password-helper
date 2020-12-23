@@ -2,6 +2,7 @@ import kotlin.math.abs
 
 class OnPaneDistanceCalculator(val pane: IPane<Char>) {
 
+    // TODO For broad keys (e.g. space) this will calculate too high a distance
     private fun calculateDistance(char1: Char, char2: Char): Int {
         val rowId1 = pane.findRow(char1)
         val rowId2 = pane.findRow(char2)

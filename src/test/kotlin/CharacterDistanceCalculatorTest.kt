@@ -2,7 +2,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Disabled
 
 internal class CharacterDistanceCalculatorTest {
 
@@ -33,7 +32,7 @@ internal class CharacterDistanceCalculatorTest {
     fun `three line word distance`() {
         assertEquals(2, calculator.sumUpDistance("qaq"))
         assertEquals(4, calculator.sumUpDistance("qsx"))
-        assertEquals(4, calculator.sumUpDistance("yaw"))
+        assertEquals(4, calculator.sumUpDistance("zaw"))
         assertEquals(4, calculator.sumUpDistance("plm"))
     }
 
@@ -45,9 +44,9 @@ internal class CharacterDistanceCalculatorTest {
 
     @Test
     fun `two pane distance`() {
-        assertEquals(2, calculator.sumUpDistance("yY"))
-        assertEquals(4, calculator.sumUpDistance("yYy"))
-        assertEquals(3, calculator.sumUpDistance("Yy"))
+        assertEquals(2, calculator.sumUpDistance("zZ"))
+        assertEquals(4, calculator.sumUpDistance("zZz"))
+        assertEquals(3, calculator.sumUpDistance("Zz"))
     }
 
 }

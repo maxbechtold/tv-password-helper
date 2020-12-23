@@ -3,14 +3,14 @@ import KeyboardPaneSwitcher.Const.upSwitch
 
 class CharacterDistanceCalculator {
     private var lowerChars = ThreeRowPane(upSwitch,
-        listOf('q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p'),
+        listOf('q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'),
         listOf('a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'),
-        listOf('⇧', 'y', 'x', 'c', 'v', 'b', 'n', 'm'))
+        listOf('⇧', 'z', 'x', 'c', 'v', 'b', 'n', 'm'))
 
     private var upperChars = ThreeRowPane(lowSwitch,
-        listOf('Q', 'W', 'E', 'R', 'T', 'Z', 'U', 'I', 'O', 'P'),
+        listOf('Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'),
         listOf('A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'),
-        listOf('⇩', 'Y', 'X', 'C', 'V', 'B', 'N', 'M'))
+        listOf('⇩', 'Z', 'X', 'C', 'V', 'B', 'N', 'M'))
 
     data class ThreeRowPane<T>(val switchChar: Char, val row1: List<T>, val row2: List<T>, val row3: List<T>) : IPane<T> {
         init {
@@ -32,6 +32,7 @@ class CharacterDistanceCalculator {
         val explodedString = switcher.explode(switchString)
         val wordList = explodedString.joinToString("").split(switcher.splitChar)
 
+        // TODO For Netflix the first character is actually "g", any other first char will have a higher initial value
         return wordList.fold(0) { s, word -> s + sumUpSubword(word)}
     }
 
