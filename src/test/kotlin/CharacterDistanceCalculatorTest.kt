@@ -31,9 +31,9 @@ internal class CharacterDistanceCalculatorTest {
     @Test
     fun `three line word distance`() {
         assertEquals(2, calculator.sumUpDistance("qaq"))
-        assertEquals(4, calculator.sumUpDistance("qsx"))
-        assertEquals(4, calculator.sumUpDistance("zaw"))
-        assertEquals(4, calculator.sumUpDistance("plm"))
+        assertEquals(5, calculator.sumUpDistance("qsx"))
+        assertEquals(5, calculator.sumUpDistance("zaw"))
+        assertEquals(3, calculator.sumUpDistance("plm"))
     }
 
     @Test
@@ -44,9 +44,14 @@ internal class CharacterDistanceCalculatorTest {
 
     @Test
     fun `two pane distance`() {
-        assertEquals(2, calculator.sumUpDistance("zZ"))
-        assertEquals(4, calculator.sumUpDistance("zZz"))
-        assertEquals(3, calculator.sumUpDistance("Zz"))
+        assertEquals(2, calculator.sumUpDistance("aA"))
+        assertEquals(4, calculator.sumUpDistance("aAa"))
+        assertEquals(3, calculator.sumUpDistance("Aa"))
+
+        assertEquals(3, calculator.sumUpDistance("a/"))
+        assertEquals(4, calculator.sumUpDistance("a\\"))
+        assertEquals(19, calculator.sumUpDistance("\$a"))
+
     }
 
 }

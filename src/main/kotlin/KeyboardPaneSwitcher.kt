@@ -1,14 +1,14 @@
-import CharacterDistanceCalculator.ThreeRowPane
-
-class KeyboardPaneSwitcher(private val panes: Collection<ThreeRowPane<Char>>) {
+class KeyboardPaneSwitcher(private val panes: Collection<IPane<Char>>) {
 
     companion object Const {
         const val upSwitch = '⇧'
         const val lowSwitch = '⇩'
+        const val symbolSwitch = '⁉'
+        const val umlautSwitch = 'ȁ'
     }
 
-    internal val switchCharacters = "$upSwitch$lowSwitch"
-    internal val switchBackCharacters = "$lowSwitch$upSwitch"
+    internal val switchCharacters = "$upSwitch$lowSwitch$symbolSwitch$umlautSwitch"
+    internal val switchBackCharacters = "$lowSwitch$upSwitch$lowSwitch$lowSwitch"
     val splitChar = '☒'
 
     private fun switchBack(char: Char): Iterable<Char> {
@@ -25,7 +25,7 @@ class KeyboardPaneSwitcher(private val panes: Collection<ThreeRowPane<Char>>) {
         val lastOrDefault = last ?: "anylowercase".first()
         return when {
             panes.any { it.contains(next) && it.contains(lastOrDefault) } -> next.toString()
-            else -> backwards(panes.first { it.contains(next) }.switchChar).toString() + next
+            else -> panes.first { it.contains(next) }.switchChar.toString() + next
         }
     }
 

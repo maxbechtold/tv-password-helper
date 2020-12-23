@@ -10,16 +10,10 @@ internal class ThreeRowPaneTest {
 
     @Test
     fun `test contains`() {
-        val pane = CharacterDistanceCalculator.ThreeRowPane('*', listOf('a', 'm'), listOf('b'), listOf('*', 'x'))
+        val pane = ThreeRowPane('*', listOf('a', 'm'), listOf('b'), listOf('*', 'x'))
         assertTrue(pane.contains('a'))
         assertTrue(pane.contains('x'))
         assertFalse(pane.contains('z'))
     }
 
-    @Test
-    fun `must contain switchChar`() {
-        assertThrows(IllegalArgumentException::class.java, fun() {
-            CharacterDistanceCalculator.ThreeRowPane('!', listOf('a'), listOf('b'), listOf('c'))
-        })
-    }
 }

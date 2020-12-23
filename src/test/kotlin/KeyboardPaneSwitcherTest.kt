@@ -8,15 +8,15 @@ internal class KeyboardPaneSwitcherTest {
 
     private lateinit var switcher: KeyboardPaneSwitcher
 
-    private var lowerChars = CharacterDistanceCalculator.ThreeRowPane(
-        upSwitch,
+    private var lowerChars = ThreeRowPane(
+        lowSwitch,
         listOf('q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p'),
         listOf('a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'),
         listOf('⇧', 'y', 'x', 'c', 'v', 'b', 'n', 'm')
     )
 
-    private var upperChars = CharacterDistanceCalculator.ThreeRowPane(
-        lowSwitch,
+    private var upperChars = ThreeRowPane(
+        upSwitch,
         listOf('Q', 'W', 'E', 'R', 'T', 'Z', 'U', 'I', 'O', 'P'),
         listOf('A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'),
         listOf('⇩', 'Y', 'X', 'C', 'V', 'B', 'N', 'M')
