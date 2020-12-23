@@ -1,9 +1,10 @@
 fun main(args: Array<String>) {
-    val lines = generateSequence(::readLine).takeWhile { it.isNotEmpty() }
+    // TODO Test this
+    val readFunction: () -> String? = { System.console()?.readPassword()?.toString() ?: readLine() }
+    val lines = generateSequence(readFunction).takeWhile { it.isNotEmpty() }
 
-    val calculator = MultiLineCalculator()
     val words = lines.toList()
-    calculator.pass(words)
+    val calculator = MultiLineCalculator().pass(words)
 
     val (word, distance) = calculator.getShortest()
 
