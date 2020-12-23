@@ -8,9 +8,24 @@ internal class KeyboardPaneSwitcherTest {
 
     private lateinit var switcher: KeyboardPaneSwitcher
 
+    private var lowerChars = CharacterDistanceCalculator.ThreeRowPane(
+        upSwitch,
+        listOf('q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p'),
+        listOf('a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'),
+        listOf('⇧', 'y', 'x', 'c', 'v', 'b', 'n', 'm')
+    )
+
+    private var upperChars = CharacterDistanceCalculator.ThreeRowPane(
+        lowSwitch,
+        listOf('Q', 'W', 'E', 'R', 'T', 'Z', 'U', 'I', 'O', 'P'),
+        listOf('A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'),
+        listOf('⇩', 'Y', 'X', 'C', 'V', 'B', 'N', 'M')
+    )
+
+
     @BeforeEach
     fun setUp() {
-        switcher = KeyboardPaneSwitcher()
+        switcher = KeyboardPaneSwitcher(listOf(lowerChars, upperChars))
     }
 
     @Test
@@ -30,5 +45,10 @@ internal class KeyboardPaneSwitcherTest {
         assertEquals("${upSwitch}O${lowSwitch}h", switcher.insertSwitchCharacters("Oh"))
         assertEquals("${upSwitch}H${lowSwitch}mm", switcher.insertSwitchCharacters("Hmm"))
         assertEquals("${upSwitch}G${lowSwitch}mb${upSwitch}H", switcher.insertSwitchCharacters("GmbH"))
+    }
+
+    @Test
+    fun `switch chars have back char`() {
+        assertEquals(switcher.switchCharacters.length, switcher.switchBackCharacters.length)
     }
 }

@@ -9,11 +9,17 @@ internal class OnPaneDistanceCalculatorTest {
     internal fun setUp() {
         calculator = OnPaneDistanceCalculator(
             CharacterDistanceCalculator.ThreeRowPane(
+                KeyboardPaneSwitcher.upSwitch,
                 listOf('q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p'),
                 listOf('a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'),
                 listOf('⇧', 'y', 'x', 'c', 'v', 'b', 'n', 'm')
             )
         )
+    }
+
+    @Test
+    fun `empty word`() {
+        assertEquals(0, calculator.sumUpDistance(""))
     }
 
     @Test

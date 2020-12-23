@@ -2,7 +2,7 @@ import kotlin.math.abs
 
 class OnPaneDistanceCalculator(val pane: IPane<Char>) {
 
-    fun calculateDistance(char1: Char, char2: Char): Int {
+    private fun calculateDistance(char1: Char, char2: Char): Int {
         val rowId1 = pane.findRow(char1)
         val rowId2 = pane.findRow(char2)
         val index1 = pane.getRow(rowId1).indexOf(char1)
@@ -11,7 +11,7 @@ class OnPaneDistanceCalculator(val pane: IPane<Char>) {
         return abs(rowId1 - rowId2) + abs(index1 - index2)
     }
 
-    public fun sumUpWord(string: String): Int {
+    fun sumUpDistance(string: String): Int {
         val chars = string.map { it }.toList()
         val charPairs = chars.zipWithNext()
 

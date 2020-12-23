@@ -43,11 +43,11 @@ internal class CharacterDistanceCalculatorTest {
         assertEquals(17, calculator.sumUpDistance("biden"))
     }
 
-    @Disabled
     @Test
     fun `two pane distance`() {
         assertEquals(2, calculator.sumUpDistance("yY"))
-        assertEquals(2, calculator.sumUpDistance("yYy"))
-        assertEquals(2, calculator.sumUpDistance("Yy"))
+        assertEquals(4, calculator.sumUpDistance("yYy"))
+        assertEquals(3, calculator.sumUpDistance("Yy"))
     }
+
 }
