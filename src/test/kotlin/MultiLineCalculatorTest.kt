@@ -1,17 +1,23 @@
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import java.lang.IllegalArgumentException
 
 internal class MultiLineCalculatorTest {
 
     @Test
-    fun getShortestWord() {
-        assertEquals("word", MultiLineCalculator().pass(listOf("word", "longerword")).getShortestWord())
-        assertEquals("uncasedword", MultiLineCalculator().pass(listOf("CasedWord", "uncasedword")).getShortestWord())
+    fun getChosenWord() {
+        assertEquals("wo..", MultiLineCalculator().pass(listOf("word", "longerword")).getChosenWord())
+        assertEquals("un.........", MultiLineCalculator().pass(listOf("CasedWord", "uncasedword")).getChosenWord())
     }
 
     @Test
-    fun getLongestWord() {
-        assertEquals("longerword", MultiLineCalculator().pass(listOf("word", "longerword")).getLongestWord())
-        assertEquals("CasedWord", MultiLineCalculator().pass(listOf("CasedWord", "uncasedword")).getLongestWord())
+    fun noEmptyList() {
+        assertThrows(IllegalArgumentException::class.java) {MultiLineCalculator().pass(emptyList()) }
+    }
+
+    @Test
+    fun getHardestWord() {
+        assertEquals("lo........", MultiLineCalculator().pass(listOf("word", "longerword")).getHardestWord())
+        assertEquals("Ca.......", MultiLineCalculator().pass(listOf("CasedWord", "uncasedword")).getHardestWord())
     }
 }

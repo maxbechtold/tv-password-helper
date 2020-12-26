@@ -6,8 +6,8 @@ fun main(args: Array<String>) {
     val words = lines.toList()
     val calculator = MultiLineCalculator().pass(words)
 
-    val (word, distance) = calculator.getShortest()
+    val (word, distance) = calculator.getChosen()
 
-    println("Got ${words.size} words with distance up to ${calculator.getLongest().second}")
-    println("Selecting $word ($distance)")
+    println("Got ${words.size} words with distance up to ${calculator.getHardest().second}")
+    println("Proposing $word ($distance)")
 }
