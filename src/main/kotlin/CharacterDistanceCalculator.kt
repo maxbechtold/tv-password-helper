@@ -1,6 +1,7 @@
 import KeyboardPaneSwitcher.Const.lowSwitch
 import KeyboardPaneSwitcher.Const.symbolSwitch
 import KeyboardPaneSwitcher.Const.upSwitch
+import java.lang.IllegalArgumentException
 
 class CharacterDistanceCalculator {
     internal var lowerChars = FiveRowPane(
@@ -18,7 +19,7 @@ class CharacterDistanceCalculator {
         listOf('Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'),
         listOf('A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', '-'),
         listOf('⇩', '⇩', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '\''),
-        listOf('⁉', '⁉', 'ȁ', 'ȁ', '␣', '␣', '␣', '⇐', '⇐', '⇐')
+        listOf('⁉', '⁉', 'ȁ', 'ȁ', '␣', '␣', '␣', '⇐', '⇐', '⇐') // TODO support space character
     )
 
     private var symbols = FiveRowPane(
@@ -48,6 +49,9 @@ class CharacterDistanceCalculator {
     private fun sumUpSubword(subword: String): Int {
         val noSwitchChar = subword.elementAtOrElse(1) { subword.first() }
         val calculator = calculators.first { it.pane.contains(noSwitchChar) }
+
+        if (!subword.all { calculator.pane.contains(it) })
+            throw IllegalArgumentException("Pane does not contain all chars of $subword")
 
         return calculator.sumUpDistance(subword)
     }

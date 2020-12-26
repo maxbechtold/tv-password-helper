@@ -18,13 +18,16 @@ class KeyboardPaneSwitcher(private val panes: Collection<IPane<Char>>) {
     private fun backwards(char: Char) = switchBackCharacters[switchCharacters.indexOf(char)]
 
     fun insertSwitchCharacters(word: String) : String {
-        return word.map { it }.fold("") {sequence, char -> sequence + mapToSequence(char, sequence.lastOrNull())}
+        return word.map { it }.fold("") {sequence, char -> sequence + mapToSequence(char, sequence)}
     }
 
-    private fun mapToSequence(next: Char, last: Char?) : String {
-        val lastOrDefault = last ?: "anylowercase".first()
+    private fun mapToSequence(next: Char, last: String) : String {
+        val lastOrDefault = if (last.isNotEmpty() ) last else "anylowercase"
+        val lastSubwordIndex = lastOrDefault.indexOfLast { switchCharacters.contains(it) } + 1
+        val wordOnPane = last.substring(lastSubwordIndex)
+
         return when {
-            panes.any { it.contains(next) && it.contains(lastOrDefault) } -> next.toString()
+            panes.first { pane -> wordOnPane.all { pane.contains(it) }}.contains(next) -> next.toString()
             else -> panes.first { it.contains(next) }.switchChar.toString() + next
         }
     }

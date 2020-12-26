@@ -34,12 +34,21 @@ internal class CharacterDistanceCalculatorTest {
         assertEquals(5, calculator.sumUpDistance("qsx"))
         assertEquals(5, calculator.sumUpDistance("zaw"))
         assertEquals(3, calculator.sumUpDistance("plm"))
+
     }
 
     @Test
-    fun `sample word distance`() {
-        assertEquals(11, calculator.sumUpDistance("trump"))
-        assertEquals(17, calculator.sumUpDistance("biden"))
+    fun `ambiguous char line distance`() {
+        assertEquals(2, calculator.sumUpDistance("1a"))
+        assertEquals(2, calculator.sumUpDistance("a1"))
+        assertEquals(4, calculator.sumUpDistance("1aA"))
+        assertEquals(3, calculator.sumUpDistance("A1"))
+        assertEquals(4, calculator.sumUpDistance("1A"))
+        assertEquals(4, calculator.sumUpDistance("a1a"))
+        assertEquals(6, calculator.sumUpDistance("a1A"))
+        assertEquals(7, calculator.sumUpDistance("A1a"))
+        assertEquals(5, calculator.sumUpDistance("A1A"))
+
     }
 
     @Test
@@ -54,4 +63,25 @@ internal class CharacterDistanceCalculatorTest {
 
     }
 
+
+    @Test
+    fun `sample word distance`() {
+        assertEquals(11, calculator.sumUpDistance("trump"))
+        assertEquals(17, calculator.sumUpDistance("biden"))
+    }
+
+    @Test
+    fun `password distance`() {
+        assertEquals(77, calculator.sumUpDistance("WtZ1IfJBqsTR"))
+        assertEquals(77, calculator.sumUpDistance("KPBURKehopL1"))
+        assertEquals(80, calculator.sumUpDistance("mmvPyDffIL0C"))
+
+        assertEquals(96, calculator.sumUpDistance("g464Oo2dMh2_"))
+        assertEquals(74, calculator.sumUpDistance("6wvGqY-jtxCF"))
+        assertEquals(81, calculator.sumUpDistance("bSL6Y-_fSR6u"))
+
+        assertEquals(96, calculator.sumUpDistance("XOn>N1VPvQ(X"))
+        assertEquals(74, calculator.sumUpDistance("}-]_8{)DwgGH"))
+        assertEquals(81, calculator.sumUpDistance("7BR])LZn58GH"))
+    }
 }
