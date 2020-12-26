@@ -1,3 +1,5 @@
+import java.lang.IllegalArgumentException
+
 class KeyboardPaneSwitcher(private val panes: Collection<IPane<Char>>) {
 
     companion object Const {
@@ -11,6 +13,7 @@ class KeyboardPaneSwitcher(private val panes: Collection<IPane<Char>>) {
     internal val switchBackCharacters = "$lowSwitch$upSwitch$lowSwitch$lowSwitch"
     val splitChar = '☒'
 
+    // TODO Will always yield upswitch for lowswitch!
     private fun switchBack(char: Char): Iterable<Char> {
         return listOf(char, splitChar, backwards(char))
     }
@@ -28,8 +31,21 @@ class KeyboardPaneSwitcher(private val panes: Collection<IPane<Char>>) {
 
         return when {
             panes.first { pane -> wordOnPane.all { pane.contains(it) }}.contains(next) -> next.toString()
-            else -> panes.first { it.contains(next) }.switchChar.toString() + next
+            else -> mapToSwitchChars(wordOnPane, next) + next
         }
+    }
+
+    private fun mapToSwitchChars(word: String, next: Char): String {
+        val targetPane = panes.first { it.contains(next) }
+        val sourcePane = panes.first { pane -> word.all { pane.contains(it) } }
+
+        if (sourcePane.contains(targetPane.switchChar))
+            return targetPane.switchChar.toString()
+
+        if (!sourcePane.contains(lowSwitch))
+            throw IllegalArgumentException("Cannot switch to next via lower chars")
+
+        return lowSwitch + targetPane.switchChar.toString()
     }
 
     internal fun explode(switchString: String) =

@@ -48,7 +48,13 @@ internal class CharacterDistanceCalculatorTest {
         assertEquals(6, calculator.sumUpDistance("a1A"))
         assertEquals(7, calculator.sumUpDistance("A1a"))
         assertEquals(5, calculator.sumUpDistance("A1A"))
+    }
 
+    @Test
+    fun `dual step pane switch`() {
+        assertEquals(16, calculator.sumUpDistance("°C"))
+        assertEquals(11, calculator.sumUpDistance("A+"))
+        assertEquals(12, calculator.sumUpDistance("1€"))
     }
 
     @Test
