@@ -4,13 +4,14 @@ import KeyboardPaneSwitcher.Const.upSwitch
 import java.lang.IllegalArgumentException
 
 class CharacterDistanceCalculator {
+    // TODO Switch and space characters are over estimated
     internal var lowerChars = FiveRowPane(
         lowSwitch,
         listOf('1', '2', '3', '4', '5', '6', '7', '8', '9', '0'),
         listOf('q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'),
         listOf('a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', '-'),
         listOf('⇧', '⇧', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '\''),
-        listOf('⁉', '⁉', 'ȁ', 'ȁ', '␣', '␣', '␣', '⇐', '⇐', '⇐')
+        listOf('⁉', '⁉', 'ȁ', 'ȁ', ' ', ' ', ' ', '⇐', '⇐', '⇐')
     )
 
     private var upperChars = FiveRowPane(
@@ -19,7 +20,7 @@ class CharacterDistanceCalculator {
         listOf('Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'),
         listOf('A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', '-'),
         listOf('⇩', '⇩', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '\''),
-        listOf('⁉', '⁉', 'ȁ', 'ȁ', '␣', '␣', '␣', '⇐', '⇐', '⇐') // TODO support space character
+        listOf('⁉', '⁉', 'ȁ', 'ȁ', ' ', ' ', ' ', '⇐', '⇐', '⇐')
     )
 
     private var symbols = FiveRowPane(
@@ -28,7 +29,7 @@ class CharacterDistanceCalculator {
         listOf('(', ')', '-', '_', '=', '+', '[', ']', '{', '}'),
         listOf('\\', '|', ';', ':', '\'', '"', ',', '.', '<', '>'),
         listOf('/', '?', '¿', '¡', 'ª', '°', '¢', '€', '£', '¥'),
-        listOf('⇩', '⇩', 'ȁ', 'ȁ', '␣', '␣', '␣', '⇐', '⇐', '⇐')
+        listOf('⇩', '⇩', 'ȁ', 'ȁ', ' ', ' ', ' ', '⇐', '⇐', '⇐')
     )
 
     private val lowerCharsCalculator = OnPaneDistanceCalculator(lowerChars)

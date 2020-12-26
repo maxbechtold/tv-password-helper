@@ -21,6 +21,16 @@ internal class CharacterDistanceCalculatorTest {
     }
 
     @Test
+    fun `space words`() {
+        assertEquals(4, calculator.sumUpDistance("b c"))
+        assertEquals(6, calculator.sumUpDistance("b b"))
+        assertEquals(3, calculator.sumUpDistance("x c"))
+        assertEquals(4, calculator.sumUpDistance("x x"))
+        assertEquals(10, calculator.sumUpDistance("x X"))
+        assertEquals(13, calculator.sumUpDistance("X x"))
+    }
+
+    @Test
     fun `two line word distance`() {
         assertEquals(1, calculator.sumUpDistance("qa"))
         assertEquals(1, calculator.sumUpDistance("aq"))
@@ -66,7 +76,6 @@ internal class CharacterDistanceCalculatorTest {
         assertEquals(3, calculator.sumUpDistance("a/"))
         assertEquals(4, calculator.sumUpDistance("a\\"))
         assertEquals(19, calculator.sumUpDistance("\$a"))
-
     }
 
 
@@ -80,14 +89,14 @@ internal class CharacterDistanceCalculatorTest {
     fun `password distance`() {
         assertEquals(77, calculator.sumUpDistance("WtZ1IfJBqsTR"))
         assertEquals(77, calculator.sumUpDistance("KPBURKehopL1"))
-        assertEquals(80, calculator.sumUpDistance("mmvPyDffIL0C"))
+        assertEquals(81, calculator.sumUpDistance("mmvPyDffIL0 "))
 
         assertEquals(96, calculator.sumUpDistance("g464Oo2dMh2_"))
         assertEquals(74, calculator.sumUpDistance("6wvGqY-jtxCF"))
         assertEquals(81, calculator.sumUpDistance("bSL6Y-_fSR6u"))
 
-        assertEquals(96, calculator.sumUpDistance("XOn>N1VPvQ(X"))
-        assertEquals(74, calculator.sumUpDistance("}-]_8{)DwgGH"))
-        assertEquals(81, calculator.sumUpDistance("7BR])LZn58GH"))
+        assertEquals(123, calculator.sumUpDistance("XOn>N1VPvQ(X"))
+        assertEquals(101, calculator.sumUpDistance("}-]_8{)DwgGH"))
+        assertEquals(96, calculator.sumUpDistance("7BR])LZn58GH"))
     }
 }
