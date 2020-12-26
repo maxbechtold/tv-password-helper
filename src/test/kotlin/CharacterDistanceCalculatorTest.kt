@@ -98,5 +98,9 @@ internal class CharacterDistanceCalculatorTest {
         assertEquals(123, calculator.sumUpDistance("XOn>N1VPvQ(X"))
         assertEquals(101, calculator.sumUpDistance("}-]_8{)DwgGH"))
         assertEquals(96, calculator.sumUpDistance("7BR])LZn58GH"))
+
+        assertEquals(106, calculator.sumUpDistance("\"6Flgrf+tD?m"))
+        assertEquals(99, calculator.sumUpDistance("9Bh:stA@/4`^"))
+        assertEquals(105, calculator.sumUpDistance("JPa,J@+91aXI"))
     }
 }
