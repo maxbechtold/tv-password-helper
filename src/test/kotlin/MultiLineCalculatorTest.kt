@@ -6,7 +6,7 @@ internal class MultiLineCalculatorTest {
 
     @Test
     fun getChosenWord() {
-        assertEquals("wo..", MultiLineCalculator().pass(listOf("word", "longerword")).getChosenWord())
+        assertEquals("on.....", MultiLineCalculator().pass(listOf("oneword", "otherword")).getChosenWord())
         assertEquals("un.........", MultiLineCalculator().pass(listOf("CasedWord", "uncasedword")).getChosenWord())
     }
 
