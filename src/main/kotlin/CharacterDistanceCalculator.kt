@@ -5,6 +5,7 @@ import java.lang.IllegalArgumentException
 
 class CharacterDistanceCalculator {
     // TODO Switch and space characters are over estimated
+    // Netflix TV keyboard EN, 2021: https://www.youtube.com/watch?v=-2bWm8NNfG4
     internal var lowerChars = FiveRowPane(
         lowSwitch,
         listOf('1', '2', '3', '4', '5', '6', '7', '8', '9', '0'),
