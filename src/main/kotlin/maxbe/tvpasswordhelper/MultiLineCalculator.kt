@@ -1,3 +1,5 @@
+package maxbe.tvpasswordhelper
+
 class MultiLineCalculator {
 
     private lateinit var inputsSorted: List<Pair<String, Int>>

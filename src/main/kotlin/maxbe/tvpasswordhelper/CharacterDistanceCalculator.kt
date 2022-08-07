@@ -1,6 +1,8 @@
-import KeyboardPaneSwitcher.Const.lowSwitch
-import KeyboardPaneSwitcher.Const.symbolSwitch
-import KeyboardPaneSwitcher.Const.upSwitch
+package maxbe.tvpasswordhelper
+
+import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Const.lowSwitch
+import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Const.symbolSwitch
+import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Const.upSwitch
 import java.lang.IllegalArgumentException
 
 class CharacterDistanceCalculator {

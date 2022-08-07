@@ -1,3 +1,5 @@
+package maxbe.tvpasswordhelper
+
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.lang.IllegalArgumentException
@@ -12,7 +14,7 @@ internal class MultiLineCalculatorTest {
 
     @Test
     fun noEmptyList() {
-        assertThrows(IllegalArgumentException::class.java) {MultiLineCalculator().pass(emptyList()) }
+        assertThrows(IllegalArgumentException::class.java) { MultiLineCalculator().pass(emptyList()) }
     }
 
     @Test

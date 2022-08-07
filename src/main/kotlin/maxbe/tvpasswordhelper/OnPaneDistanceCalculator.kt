@@ -1,3 +1,5 @@
+package maxbe.tvpasswordhelper
+
 import kotlin.math.abs
 
 class OnPaneDistanceCalculator(val pane: IPane<Char>) {

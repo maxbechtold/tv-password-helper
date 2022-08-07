@@ -1,3 +1,5 @@
+package maxbe.tvpasswordhelper
+
 import java.lang.IllegalArgumentException
 
 class KeyboardPaneSwitcher(private val panes: Collection<IPane<Char>>) {

@@ -1,3 +1,5 @@
+package maxbe.tvpasswordhelper
+
 interface IPane<T> {
     val switchChar: T
 

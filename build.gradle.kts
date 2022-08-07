@@ -24,7 +24,7 @@ tasks.test {
 }
 
 application {
-    mainClass.set("main")
+    mainClass.set("maxbe.tvpasswordhelper.Main")
 }
 
 val compileKotlin: KotlinCompile by tasks

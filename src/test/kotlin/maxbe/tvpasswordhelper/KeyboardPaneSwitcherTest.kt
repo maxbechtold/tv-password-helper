@@ -1,8 +1,12 @@
-import KeyboardPaneSwitcher.Const.lowSwitch
+package maxbe.tvpasswordhelper
+
+import maxbe.tvpasswordhelper.KeyboardPaneSwitcher
+import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Const.lowSwitch
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import KeyboardPaneSwitcher.Const.upSwitch
+import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Const.upSwitch
+import maxbe.tvpasswordhelper.ThreeRowPane
 
 internal class KeyboardPaneSwitcherTest {
 

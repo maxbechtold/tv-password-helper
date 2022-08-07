@@ -1,3 +1,6 @@
+package maxbe.tvpasswordhelper
+
+// TODO: Make this entrypoint for jar 
 fun main() {
     // TODO Test this
     println("Enter words line by line. Calculation starts after first empty line")
