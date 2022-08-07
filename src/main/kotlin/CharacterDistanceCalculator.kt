@@ -6,7 +6,7 @@ import java.lang.IllegalArgumentException
 class CharacterDistanceCalculator {
     // TODO Switch and space characters are over estimated
     // Netflix TV keyboard EN, 2021: https://www.youtube.com/watch?v=-2bWm8NNfG4
-    internal var lowerChars = FiveRowPane(
+    private var lowerChars = FiveRowPane(
         lowSwitch,
         listOf('1', '2', '3', '4', '5', '6', '7', '8', '9', '0'),
         listOf('q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'),
@@ -36,7 +36,7 @@ class CharacterDistanceCalculator {
     private val lowerCharsCalculator = OnPaneDistanceCalculator(lowerChars)
     private val upperCharsCalculator = OnPaneDistanceCalculator(upperChars)
     private val symbolsCalculator = OnPaneDistanceCalculator(symbols)
-    internal val calculators = listOf(lowerCharsCalculator, upperCharsCalculator, symbolsCalculator)
+    private val calculators = listOf(lowerCharsCalculator, upperCharsCalculator, symbolsCalculator)
 
     fun sumUpDistance(string: String): Int {
         val switcher = KeyboardPaneSwitcher(calculators.map { it.pane })

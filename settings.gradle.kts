@@ -1,3 +1,3 @@
 
-rootProject.name = "KotlinTest"
+rootProject.name = "TVPasswordHelper"
 

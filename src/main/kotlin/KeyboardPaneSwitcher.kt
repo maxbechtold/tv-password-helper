@@ -25,7 +25,7 @@ class KeyboardPaneSwitcher(private val panes: Collection<IPane<Char>>) {
     }
 
     private fun mapToSequence(next: Char, last: String) : String {
-        val lastOrDefault = if (last.isNotEmpty() ) last else "anylowercase"
+        val lastOrDefault = last.ifEmpty { "anylowercase" }
         val lastSubwordIndex = lastOrDefault.indexOfLast { switchCharacters.contains(it) } + 1
         val wordOnPane = last.substring(lastSubwordIndex)
 
