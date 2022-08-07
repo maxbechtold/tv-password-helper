@@ -4,6 +4,7 @@ import KeyboardPaneSwitcher.Const.upSwitch
 import java.lang.IllegalArgumentException
 
 class CharacterDistanceCalculator {
+    // TODO: Extract for different services
     // TODO Switch and space characters are over estimated
     // Netflix TV keyboard EN, 2021: https://www.youtube.com/watch?v=-2bWm8NNfG4
     private var lowerChars = FiveRowPane(
@@ -33,6 +34,7 @@ class CharacterDistanceCalculator {
         listOf('⇩', '⇩', 'ȁ', 'ȁ', ' ', ' ', ' ', '⇐', '⇐', '⇐')
     )
 
+    // TODO: Add umlaut (lower, upper) panes
     private val lowerCharsCalculator = OnPaneDistanceCalculator(lowerChars)
     private val upperCharsCalculator = OnPaneDistanceCalculator(upperChars)
     private val symbolsCalculator = OnPaneDistanceCalculator(symbols)
@@ -44,7 +46,7 @@ class CharacterDistanceCalculator {
         val explodedString = switcher.explode(switchString)
         val wordList = explodedString.joinToString("").split(switcher.splitChar)
 
-        // TODO For Netflix the first character is actually "g", any other first char will have a higher initial value
+        // TODO For Netflix the initially selected character is "g", so the distance (0-4?) to the first char should be considered
         return wordList.fold(0) { s, word -> s + sumUpSubword(word)}
     }
 

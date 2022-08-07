@@ -16,7 +16,7 @@ class MultiLineCalculator {
         return this
     }
 
-    private val hardnessThreshold = 0.55
+    private val hardnessThreshold = 0.6
 
     fun getChosen() = inputsSorted.first {it.second >= hardnessThreshold * getHardest().second}
 
