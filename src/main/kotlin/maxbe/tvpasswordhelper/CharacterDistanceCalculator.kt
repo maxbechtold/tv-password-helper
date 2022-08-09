@@ -1,20 +1,23 @@
 package maxbe.tvpasswordhelper
 
-import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Const.lowSwitch
-import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Const.symbolSwitch
-import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Const.upSwitch
+import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Switches.lowSwitch
+import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Switches.symbolSwitch
+import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Switches.umlautLowSwitch
+import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Switches.umlautUpSwitch
+import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Switches.upSwitch
 import java.lang.IllegalArgumentException
 
 class CharacterDistanceCalculator {
     // TODO: Extract for different services
     // TODO Switch and space characters are over estimated
-    // Netflix TV keyboard EN, 2021: https://www.youtube.com/watch?v=-2bWm8NNfG4
+    // TODO: Also support qwertz layout?
+    // Redflix Android TV Keyboard 22/08
     private var lowerChars = FiveRowPane(
         lowSwitch,
         listOf('1', '2', '3', '4', '5', '6', '7', '8', '9', '0'),
         listOf('q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'),
         listOf('a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', '-'),
-        listOf('⇧', '⇧', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '\''),
+        listOf('Ā', 'Ā', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '\''),
         listOf('⁉', '⁉', 'ȁ', 'ȁ', ' ', ' ', ' ', '⇐', '⇐', '⇐')
     )
 
@@ -23,7 +26,7 @@ class CharacterDistanceCalculator {
         listOf('1', '2', '3', '4', '5', '6', '7', '8', '9', '0'),
         listOf('Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'),
         listOf('A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', '-'),
-        listOf('⇩', '⇩', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '\''),
+        listOf('ā', 'ā', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '\''),
         listOf('⁉', '⁉', 'ȁ', 'ȁ', ' ', ' ', ' ', '⇐', '⇐', '⇐')
     )
 
@@ -33,14 +36,29 @@ class CharacterDistanceCalculator {
         listOf('(', ')', '-', '_', '=', '+', '[', ']', '{', '}'),
         listOf('\\', '|', ';', ':', '\'', '"', ',', '.', '<', '>'),
         listOf('/', '?', '¿', '¡', 'ª', '°', '¢', '€', '£', '¥'),
-        listOf('⇩', '⇩', 'ȁ', 'ȁ', ' ', ' ', ' ', '⇐', '⇐', '⇐')
+        listOf('ā', 'ā', 'ȁ', 'ȁ', ' ', ' ', ' ', '⇐', '⇐', '⇐')
     )
 
-    // TODO: Add umlaut (lower, upper) panes
-    private val lowerCharsCalculator = OnPaneDistanceCalculator(lowerChars)
-    private val upperCharsCalculator = OnPaneDistanceCalculator(upperChars)
-    private val symbolsCalculator = OnPaneDistanceCalculator(symbols)
-    private val calculators = listOf(lowerCharsCalculator, upperCharsCalculator, symbolsCalculator)
+    private var lowerUmlauts = FiveRowPane(
+        umlautLowSwitch,
+        listOf('1', '2', '3', '4', '5', '6', '7', '8', '9', '0'),
+        listOf('à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é'),
+        listOf('ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô'),
+        listOf('Ȁ', 'õ', 'ö', 'ø', 'œ', 'ß', 'ù', 'ú', 'û', 'ü'),
+        listOf('⁉', '⁉', 'ā', 'ā', ' ', ' ', ' ', '⇐', '⇐', '⇐')
+    )
+
+    private var upperUmlauts = FiveRowPane(
+        umlautUpSwitch,
+        listOf('1', '2', '3', '4', '5', '6', '7', '8', '9', '0'),
+        listOf('À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É'),
+        listOf('Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ñ', 'Ò', 'Ó', 'Ô'),
+        listOf('ȁ', 'Õ', 'Ö', 'Ø', 'Œ', 'ß', 'Ù', 'Ú', 'Û', 'Ü'),
+        listOf('⁉', '⁉', 'Ā', 'Ā', ' ', ' ', ' ', '⇐', '⇐', '⇐')
+    )
+
+    private val calculators =
+        listOf(lowerChars, upperChars, symbols, lowerUmlauts, upperUmlauts).map(::OnPaneDistanceCalculator)
 
     fun sumUpDistance(string: String): Int {
         val switcher = KeyboardPaneSwitcher(calculators.map { it.pane })
@@ -49,7 +67,7 @@ class CharacterDistanceCalculator {
         val wordList = explodedString.joinToString("").split(switcher.splitChar)
 
         // TODO For Netflix the initially selected character is "g", so the distance (0-4?) to the first char should be considered
-        return wordList.fold(0) { s, word -> s + sumUpSubword(word)}
+        return wordList.fold(0) { s, word -> s + sumUpSubword(word) }
     }
 
     private fun sumUpSubword(subword: String): Int {

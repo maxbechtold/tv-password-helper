@@ -71,6 +71,13 @@ internal class CharacterDistanceCalculatorTest {
     }
 
     @Test
+    fun `non-default pane switch`() {
+        assertEquals(16, calculator.sumUpDistance("äÄ"))
+        assertEquals(10, calculator.sumUpDistance("ßs"))
+        assertEquals(38, calculator.sumUpDistance("Ø2.3"))
+    }
+
+    @Test
     fun `two pane distance`() {
         assertEquals(2, calculator.sumUpDistance("aA"))
         assertEquals(4, calculator.sumUpDistance("aAa"))

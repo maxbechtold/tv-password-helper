@@ -4,18 +4,18 @@ import java.lang.IllegalArgumentException
 
 class KeyboardPaneSwitcher(private val panes: Collection<IPane<Char>>) {
 
-    companion object Const {
-        const val upSwitch = '⇧'
-        const val lowSwitch = '⇩'
+    companion object Switches {
+        const val lowSwitch = 'ā'
+        const val upSwitch = 'Ā'
         const val symbolSwitch = '⁉'
-        const val umlautSwitch = 'ȁ'
+        const val umlautLowSwitch = 'ȁ'
+        const val umlautUpSwitch = 'Ȁ'
     }
 
-    internal val switchCharacters = "$upSwitch$lowSwitch$symbolSwitch$umlautSwitch"
-    internal val switchBackCharacters = "$lowSwitch$upSwitch$lowSwitch$lowSwitch"
+    internal val switchCharacters = "$upSwitch$lowSwitch$symbolSwitch$umlautLowSwitch$umlautUpSwitch"
+    internal val switchBackCharacters = "$lowSwitch$upSwitch$lowSwitch$lowSwitch$upSwitch"
     val splitChar = '☒'
 
-    // TODO Will always yield upswitch for lowswitch!
     private fun switchBack(char: Char): Iterable<Char> {
         return listOf(char, splitChar, backwards(char))
     }
@@ -38,16 +38,20 @@ class KeyboardPaneSwitcher(private val panes: Collection<IPane<Char>>) {
     }
 
     private fun mapToSwitchChars(word: String, next: Char): String {
-        val targetPane = panes.first { it.contains(next) }
+        val targetPane = panes.firstOrNull { it.contains(next) }
+            ?: throw IllegalArgumentException("Character is not supported: $next")
         val sourcePane = panes.first { pane -> word.all { pane.contains(it) } }
 
         if (sourcePane.contains(targetPane.switchChar))
             return targetPane.switchChar.toString()
 
-        if (!sourcePane.contains(lowSwitch))
-            throw IllegalArgumentException("Cannot switch to next via lower chars")
+        val viaPane = panes.first { it.contains(targetPane.switchChar)}
+        // TODO: Since not all panes are reachable from everywhere, this is a shortest-path problem... solve in a generic way?
+        val viaSwitch = viaPane.switchChar
+        if (!sourcePane.contains(viaSwitch))
+            throw IllegalArgumentException("Cannot switch to pane containing $next via $viaSwitch")
 
-        return lowSwitch + targetPane.switchChar.toString()
+        return viaSwitch + targetPane.switchChar.toString()
     }
 
     internal fun explode(switchString: String) =

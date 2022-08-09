@@ -1,14 +1,22 @@
 package maxbe.tvpasswordhelper
 
-import maxbe.tvpasswordhelper.KeyboardPaneSwitcher
-import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Const.lowSwitch
+import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Switches.lowSwitch
+import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Switches.umlautLowSwitch
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Const.upSwitch
-import maxbe.tvpasswordhelper.ThreeRowPane
+import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Switches.upSwitch
+import org.junit.jupiter.api.assertThrows
+import java.lang.IllegalArgumentException
+import kotlin.test.assertContains
 
 internal class KeyboardPaneSwitcherTest {
+
+    companion object {
+        const val UPS = upSwitch
+        const val LOS = lowSwitch
+        const val UML = umlautLowSwitch
+    }
 
     private lateinit var switcher: KeyboardPaneSwitcher
 
@@ -16,20 +24,28 @@ internal class KeyboardPaneSwitcherTest {
         lowSwitch,
         listOf('q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p'),
         listOf('a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'),
-        listOf('⇧', 'y', 'x', 'c', 'v', 'b', 'n', 'm')
+        listOf(UPS, 'y', 'x', 'c', 'v', 'b', 'n', 'm')
     )
 
     private var upperChars = ThreeRowPane(
         upSwitch,
         listOf('Q', 'W', 'E', 'R', 'T', 'Z', 'U', 'I', 'O', 'P'),
         listOf('A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'),
-        listOf('⇩', 'Y', 'X', 'C', 'V', 'B', 'N', 'M')
+        listOf(LOS, 'Y', 'X', 'C', 'V', 'B', 'N', UML)
+    )
+
+
+    private var umlautChars = ThreeRowPane(
+        umlautLowSwitch,
+        listOf('à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é'),
+        listOf('ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô'),
+        listOf(UPS, 'õ', 'ö', 'ø', 'œ', 'ß', 'ù', 'ú', 'û', LOS),
     )
 
 
     @BeforeEach
     fun setUp() {
-        switcher = KeyboardPaneSwitcher(listOf(lowerChars, upperChars))
+        switcher = KeyboardPaneSwitcher(listOf(lowerChars, upperChars, umlautChars))
     }
 
     @Test
@@ -38,21 +54,36 @@ internal class KeyboardPaneSwitcherTest {
     }
 
     @Test
+    fun `throws for unsupported characters`() {
+        val exception = assertThrows<IllegalArgumentException> { switcher.insertSwitchCharacters("T€") }
+        assertContains(exception.message.toString(), "not supported: €")
+    }
+
+    @Test
     fun `start with lower case`() {
-        assertEquals("q${upSwitch}Q", switcher.insertSwitchCharacters("qQ"))
-        assertEquals("b${upSwitch}AV", switcher.insertSwitchCharacters("bAV"))
-        assertEquals("h${upSwitch}TT${lowSwitch}p", switcher.insertSwitchCharacters("hTTp"))
+        assertEquals("q${UPS}Q", switcher.insertSwitchCharacters("qQ"))
+        assertEquals("b${UPS}AV", switcher.insertSwitchCharacters("bAV"))
+        assertEquals("h${UPS}TT${LOS}p", switcher.insertSwitchCharacters("hTTp"))
     }
 
     @Test
     fun `start with upper case`() {
-        assertEquals("${upSwitch}O${lowSwitch}h", switcher.insertSwitchCharacters("Oh"))
-        assertEquals("${upSwitch}H${lowSwitch}mm", switcher.insertSwitchCharacters("Hmm"))
-        assertEquals("${upSwitch}G${lowSwitch}mb${upSwitch}H", switcher.insertSwitchCharacters("GmbH"))
+        assertEquals("${UPS}O${LOS}h", switcher.insertSwitchCharacters("Oh"))
+        assertEquals("${UPS}H${LOS}mm", switcher.insertSwitchCharacters("Hmm"))
+        assertEquals("${UPS}G${LOS}mb${UPS}H", switcher.insertSwitchCharacters("GmbH"))
     }
 
     @Test
-    fun `switch chars have back char`() {
-        assertEquals(switcher.switchCharacters.length, switcher.switchBackCharacters.length)
+    fun `start with umlaut`() {
+        assertEquals("${UPS}${UML}ß", switcher.insertSwitchCharacters("ß"))
+        assertEquals("${UPS}${UML}ä${LOS}h", switcher.insertSwitchCharacters("äh"))
+        assertEquals("${UPS}${UML}ø${UPS}G", switcher.insertSwitchCharacters("øG"))
     }
+
+    @Test
+    fun `switch chars have different back char`() {
+        assertEquals(switcher.switchCharacters.length, switcher.switchBackCharacters.length)
+        assertFalse(switcher.switchCharacters.zip(switcher.switchBackCharacters) { a, b -> a == b }.any { it })
+    }
+
 }
