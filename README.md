@@ -30,4 +30,10 @@ Proposing aD........ (81)
 ```
 
 ## How to run it
-Set up the project, run `gradlew build` and start `main.kt`. Or use IntelliJ IDEA.
+
+### IntelliJ IDEA (or other Java IDEs)
+Set up the project, run `gradlew build` and start `main.kt`.  
+
+### On the command line
+Run `gradlew installDist` to get a portable installation in `build/install`.  
+You can copy it to any system which has a JRE (11 or later) and run the app with the batch script in `bin/`
