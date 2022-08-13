@@ -1,4 +1,5 @@
 # tv-password-helper
+[![Java CI with Gradle](https://github.com/maxbechtold/tv-password-helper/actions/workflows/gradle.yml/badge.svg)](https://github.com/maxbechtold/tv-password-helper/actions/workflows/gradle.yml)  
 Lowering your effort of entering passwords through TV remotes.
 
 ## The problem
