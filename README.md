@@ -1,14 +1,11 @@
 # tv-password-helper
 Lowering your effort of entering passwords through TV remotes.
 
-## Warning
-Passwords are sensitive data, so you should actually not trust this tool - you can however check the source code and see that the following is true
-- it will not store or expose your passwords
-- it will not use the passwords in any way
+## The problem
+![Photo of TV keyboard](src/main/resources/leanback_keyboard.jpg)
 
-Also keep in mind
-- it says nothing about the security or quality of your passwords, just estimates their input effort
-- it might suggest passwords too simple to be of any use - it's up to you to decide if you want to use the proposed password
+Using the remote control arrow keys to select characters on the TV screen is cumbersome despite the "Wheel of Fortune" vibes. Especially if you use special characters in your password, which are often hidden on another screen.  
+This is where the *TV Password Helper* jumps in. It finds you a password that has the shortest "path" on the keyboard - your thumb will thank you!
 
 ## How it works
 
@@ -40,3 +37,16 @@ Set up the project, run `gradlew build` and start `main.kt`.
 ### On the command line
 Run `gradlew installDist` to get a portable installation in `build/install`.  
 You can copy it to any system which has a JRE (11 or later) and run the app with the batch script in `bin/`
+
+## Limitations
+This tool is far from perfect, see the Issues for shortcomings or bugs.  
+For now, it supports the English Netflix keyboard layout (qwerty). Further layouts/languages might be added in the future, and also other popular TV apps.
+
+## Warning
+Passwords are sensitive data, so you should actually not trust this tool - you can however check the source code and see that the following is true
+- it will not store or expose your passwords
+- it will not use the passwords in any way
+
+Also keep in mind
+- it says nothing about the security or quality of your passwords, just estimates their input effort
+- it might suggest passwords too simple to be of any use - it's up to you to decide if you want to use the proposed password
