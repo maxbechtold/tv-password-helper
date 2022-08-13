@@ -19,6 +19,7 @@ Finish your input with an empty line. Then, the tool will estimate the *effort* 
 The following illustrates the usage and shows the output (candidate + effort):
 
 ```
+Enter words line by line. Calculation starts after first empty line
 Wt4U^Hm6?y
 f7Evz}W+V^
 aD}@bQm(H6
@@ -28,6 +29,8 @@ j%mBQ&Z2.k
 Got 5 words with distance up to 122
 Proposing aD........ (81)
 ```
+
+As your password is among the words entered, you should close the console window to clear any traces.
 
 ## How to run it
 

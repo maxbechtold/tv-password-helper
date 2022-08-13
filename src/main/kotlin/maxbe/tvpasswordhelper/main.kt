@@ -13,4 +13,9 @@ fun main() {
 
     println("Got ${words.size} words with distance up to ${calculator.getHardest().second}")
     println("Proposing $word ($distance)")
+
+    val exitDelaySeconds = 5
+    println()
+    println("Exiting in $exitDelaySeconds seconds...")
+    Thread.sleep(exitDelaySeconds * 1000L)
 }
