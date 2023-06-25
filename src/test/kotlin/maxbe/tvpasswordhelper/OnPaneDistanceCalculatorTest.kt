@@ -13,8 +13,7 @@ internal class OnPaneDistanceCalculatorTest {
     @BeforeEach
     internal fun setUp() {
         calculator = OnPaneDistanceCalculator(
-            ThreeRowPane(
-                KeyboardPaneSwitcher.upSwitch,
+            ThreeRowPane('ā',
                 listOf('q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p'),
                 listOf('a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'),
                 listOf('⇧', 'y', 'x', 'c', 'v', 'b', 'n', 'm')

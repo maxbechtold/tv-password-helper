@@ -12,7 +12,7 @@ internal class CharacterDistanceCalculatorTest {
 
     @BeforeEach
     fun setUp() {
-        calculator = CharacterDistanceCalculator(Netflix.calculators)
+        calculator = CharacterDistanceCalculator()
     }
 
     @Test

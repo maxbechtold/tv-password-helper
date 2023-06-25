@@ -1,7 +1,5 @@
 package maxbe.tvpasswordhelper
 
-import maxbe.tvpasswordhelper.service.Netflix
-
 class MultiLineCalculator {
 
     private lateinit var inputsSorted: List<Pair<String, Int>>
@@ -10,7 +8,7 @@ class MultiLineCalculator {
         require(lines.isNotEmpty()) { "Must specify one or more words" }
 
         // TODO Will always pick those of lowest complexity too (e.g. alphanumeric over those with one or more symbols)
-        val calculator = CharacterDistanceCalculator(Netflix.calculators)
+        val calculator = CharacterDistanceCalculator()
         val wordsSorted = lines
             .mapIndexed { index, s -> index to calculator.sumUpDistance(s) }
             .sortedWith { o1, o2 -> o1.second - o2.second }

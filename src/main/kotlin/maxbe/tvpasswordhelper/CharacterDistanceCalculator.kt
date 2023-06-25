@@ -1,14 +1,23 @@
 package maxbe.tvpasswordhelper
 
-class CharacterDistanceCalculator(private val calculators: List<OnPaneDistanceCalculator>) {
+import maxbe.tvpasswordhelper.service.DisneyPlus
+import maxbe.tvpasswordhelper.service.Netflix
+import java.util.logging.Logger
 
+class CharacterDistanceCalculator {
+
+    val LOG = Logger.getLogger(this.javaClass.name)
+
+    // TODO: Make service a parameter/program argument
+    val calculators = Netflix.calculators  // DisneyPlus
     fun sumUpDistance(string: String): Int {
         val switcher = KeyboardPaneSwitcher(calculators.map { it.pane })
         val switchString = switcher.insertSwitchCharacters(string)
         val explodedString = switcher.explode(switchString)
+        LOG.info("Exploded string: $explodedString")
         val wordList = explodedString.joinToString("").split(switcher.splitChar)
 
-        // TODO For Netflix the initially selected character is "g", so the distance (0-4?) to the first char should be considered
+        // TODO Distance (0-4?) to the first char should be considered (cf. InputComfort)
         return wordList.fold(0) { s, word -> s + sumUpSubword(word) }
     }
 

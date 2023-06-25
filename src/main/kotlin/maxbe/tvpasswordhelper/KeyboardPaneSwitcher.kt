@@ -1,26 +1,17 @@
 package maxbe.tvpasswordhelper
 
+import maxbe.tvpasswordhelper.service.DisneyPlus
+import maxbe.tvpasswordhelper.service.Netflix
 import java.lang.IllegalArgumentException
 
 class KeyboardPaneSwitcher(private val panes: Collection<IPane<Char>>) {
 
-    companion object Switches {
-        const val lowSwitch = 'ā'
-        const val upSwitch = 'Ā'
-        const val symbolSwitch = '⁉'
-        const val umlautLowSwitch = 'ȁ'
-        const val umlautUpSwitch = 'Ȁ'
-    }
-
-    internal val switchCharacters = "$upSwitch$lowSwitch$symbolSwitch$umlautLowSwitch$umlautUpSwitch"
-    internal val switchBackCharacters = "$lowSwitch$upSwitch$lowSwitch$lowSwitch$upSwitch"
+    private val serviceClass = Netflix // DisneyPlus
     val splitChar = '☒'
 
     private fun switchBack(char: Char): Iterable<Char> {
-        return listOf(char, splitChar, backwards(char))
+        return listOf(char, splitChar, serviceClass.backwardSwitch(char))
     }
-
-    private fun backwards(char: Char) = switchBackCharacters[switchCharacters.indexOf(char)]
 
     fun insertSwitchCharacters(word: String) : String {
         return word.map { it }.fold("") {sequence, char -> sequence + mapToSequence(char, sequence)}
@@ -28,7 +19,7 @@ class KeyboardPaneSwitcher(private val panes: Collection<IPane<Char>>) {
 
     private fun mapToSequence(next: Char, last: String) : String {
         val lastOrDefault = last.ifEmpty { "anylowercase" }
-        val lastSubwordIndex = lastOrDefault.indexOfLast { switchCharacters.contains(it) } + 1
+        val lastSubwordIndex = lastOrDefault.indexOfLast { serviceClass.switchCharacters.contains(it) } + 1
         val wordOnPane = last.substring(lastSubwordIndex)
 
         return when {
@@ -55,7 +46,7 @@ class KeyboardPaneSwitcher(private val panes: Collection<IPane<Char>>) {
     }
 
     internal fun explode(switchString: String) =
-        switchString.flatMap { if (switchCharacters.contains(it)) switchBack(it) else listOf(it) }
+        switchString.flatMap { if (serviceClass.switchCharacters.contains(it)) switchBack(it) else listOf(it) }
 
 
 }
