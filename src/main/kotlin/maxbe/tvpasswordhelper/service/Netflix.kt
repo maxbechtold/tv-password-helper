@@ -11,7 +11,7 @@ class Netflix {
     // TODO: Also support qwertz layout?
 
     companion object {
-        var lowerChars = FiveRowPane(
+        private var lowerChars = FiveRowPane(
             KeyboardPaneSwitcher.lowSwitch,
             listOf('1', '2', '3', '4', '5', '6', '7', '8', '9', '0'),
             listOf('q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'),
@@ -34,7 +34,7 @@ class Netflix {
             listOf('`', '~', '!', '@', '#', '$', '%', '^', '&', '*'),
             listOf('(', ')', '-', '_', '=', '+', '[', ']', '{', '}'),
             listOf('\\', '|', ';', ':', '\'', '"', ',', '.', '<', '>'),
-            listOf('/', '?', '¿', '¡', 'ª', '°', '¢', '€', '£', '¥'),
+            listOf('/', '?', '¡', '¿', 'ª', '°', '¢', '€', '£', '¥'),
             listOf('ā', 'ā', 'ȁ', 'ȁ', ' ', ' ', ' ', '⇐', '⇐', '⇐')
         )
 
