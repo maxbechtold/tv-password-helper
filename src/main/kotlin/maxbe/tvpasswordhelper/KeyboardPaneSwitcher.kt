@@ -1,26 +1,14 @@
 package maxbe.tvpasswordhelper
 
-import java.lang.IllegalArgumentException
+import maxbe.tvpasswordhelper.service.Keyboard
 
-class KeyboardPaneSwitcher(private val panes: Collection<IPane<Char>>) {
+class KeyboardPaneSwitcher(private val panes: Collection<IPane<Char>>, private val keyboard: Keyboard) {
 
-    companion object Switches {
-        const val lowSwitch = 'ā'
-        const val upSwitch = 'Ā'
-        const val symbolSwitch = '⁉'
-        const val umlautLowSwitch = 'ȁ'
-        const val umlautUpSwitch = 'Ȁ'
-    }
-
-    internal val switchCharacters = "$upSwitch$lowSwitch$symbolSwitch$umlautLowSwitch$umlautUpSwitch"
-    internal val switchBackCharacters = "$lowSwitch$upSwitch$lowSwitch$lowSwitch$upSwitch"
     val splitChar = '☒'
 
     private fun switchBack(char: Char): Iterable<Char> {
-        return listOf(char, splitChar, backwards(char))
+        return listOf(char, splitChar, keyboard.backwardSwitch(char))
     }
-
-    private fun backwards(char: Char) = switchBackCharacters[switchCharacters.indexOf(char)]
 
     fun insertSwitchCharacters(word: String) : String {
         return word.map { it }.fold("") {sequence, char -> sequence + mapToSequence(char, sequence)}
@@ -28,10 +16,11 @@ class KeyboardPaneSwitcher(private val panes: Collection<IPane<Char>>) {
 
     private fun mapToSequence(next: Char, last: String) : String {
         val lastOrDefault = last.ifEmpty { "anylowercase" }
-        val lastSubwordIndex = lastOrDefault.indexOfLast { switchCharacters.contains(it) } + 1
+        val lastSubwordIndex = lastOrDefault.indexOfLast { keyboard.isSwitch(it) } + 1
         val wordOnPane = last.substring(lastSubwordIndex)
 
         return when {
+            // TODO: This is hard to understand... But here it might be where we check if next.lowercase() can be found, which means holdForCaps would apply...
             panes.first { pane -> wordOnPane.all { pane.contains(it) }}.contains(next) -> next.toString()
             else -> mapToSwitchChars(wordOnPane, next) + next
         }
@@ -55,7 +44,7 @@ class KeyboardPaneSwitcher(private val panes: Collection<IPane<Char>>) {
     }
 
     internal fun explode(switchString: String) =
-        switchString.flatMap { if (switchCharacters.contains(it)) switchBack(it) else listOf(it) }
+        switchString.flatMap { if (keyboard.isSwitch(it)) switchBack(it) else listOf(it) }
 
 
 }

@@ -4,7 +4,7 @@ import kotlin.math.abs
 
 class OnPaneDistanceCalculator(val pane: IPane<Char>) {
 
-    // TODO Should consider wrap around at the edges
+    // TODO Should consider wrap around at the edges (cf. InputComfort)
     private fun calculateDistance(char1: Char, char2: Char): Int {
         val rowId1 = pane.findRow(char1)
         val rowId2 = pane.findRow(char2)

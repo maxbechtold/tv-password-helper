@@ -1,6 +1,6 @@
 package maxbe.tvpasswordhelper
 
-import maxbe.tvpasswordhelper.service.Netflix
+import maxbe.tvpasswordhelper.service.Service
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -12,7 +12,7 @@ internal class CharacterDistanceCalculatorTest {
 
     @BeforeEach
     fun setUp() {
-        calculator = CharacterDistanceCalculator(Netflix.calculators)
+        calculator = CharacterDistanceCalculator(Service.Netflix)
     }
 
     @Test

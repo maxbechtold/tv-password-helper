@@ -1,34 +1,31 @@
 package maxbe.tvpasswordhelper
 
-import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Switches.lowSwitch
-import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Switches.umlautLowSwitch
-import org.junit.jupiter.api.Assertions.*
+import maxbe.tvpasswordhelper.service.NetflixQwerty
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import maxbe.tvpasswordhelper.KeyboardPaneSwitcher.Switches.upSwitch
 import org.junit.jupiter.api.assertThrows
-import java.lang.IllegalArgumentException
 import kotlin.test.assertContains
 
 internal class KeyboardPaneSwitcherTest {
 
     companion object {
-        const val UPS = upSwitch
-        const val LOS = lowSwitch
-        const val UML = umlautLowSwitch
+        const val UPS = 'Ā'
+        const val LOS = 'ā'
+        const val UML = 'ȁ'
     }
 
     private lateinit var switcher: KeyboardPaneSwitcher
 
     private var lowerChars = ThreeRowPane(
-        lowSwitch,
+        LOS,
         listOf('q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p'),
         listOf('a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'),
         listOf(UPS, 'y', 'x', 'c', 'v', 'b', 'n', 'm')
     )
 
     private var upperChars = ThreeRowPane(
-        upSwitch,
+        UPS,
         listOf('Q', 'W', 'E', 'R', 'T', 'Z', 'U', 'I', 'O', 'P'),
         listOf('A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'),
         listOf(LOS, 'Y', 'X', 'C', 'V', 'B', 'N', UML)
@@ -36,7 +33,7 @@ internal class KeyboardPaneSwitcherTest {
 
 
     private var umlautChars = ThreeRowPane(
-        umlautLowSwitch,
+        UML,
         listOf('à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é'),
         listOf('ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô'),
         listOf(UPS, 'õ', 'ö', 'ø', 'œ', 'ß', 'ù', 'ú', 'û', LOS),
@@ -45,7 +42,7 @@ internal class KeyboardPaneSwitcherTest {
 
     @BeforeEach
     fun setUp() {
-        switcher = KeyboardPaneSwitcher(listOf(lowerChars, upperChars, umlautChars))
+        switcher = KeyboardPaneSwitcher(listOf(lowerChars, upperChars, umlautChars), NetflixQwerty())
     }
 
     @Test
@@ -78,12 +75,6 @@ internal class KeyboardPaneSwitcherTest {
         assertEquals("${UPS}${UML}ß", switcher.insertSwitchCharacters("ß"))
         assertEquals("${UPS}${UML}ä${LOS}h", switcher.insertSwitchCharacters("äh"))
         assertEquals("${UPS}${UML}ø${UPS}G", switcher.insertSwitchCharacters("øG"))
-    }
-
-    @Test
-    fun `switch chars have different back char`() {
-        assertEquals(switcher.switchCharacters.length, switcher.switchBackCharacters.length)
-        assertFalse(switcher.switchCharacters.zip(switcher.switchBackCharacters) { a, b -> a == b }.any { it })
     }
 
 }
