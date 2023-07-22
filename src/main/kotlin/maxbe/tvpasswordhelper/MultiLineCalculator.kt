@@ -1,6 +1,8 @@
 package maxbe.tvpasswordhelper
 
-class MultiLineCalculator {
+import maxbe.tvpasswordhelper.service.Service
+
+class MultiLineCalculator(val service: Service) {
 
     private lateinit var inputsSorted: List<Pair<String, Int>>
 
@@ -8,7 +10,7 @@ class MultiLineCalculator {
         require(lines.isNotEmpty()) { "Must specify one or more words" }
 
         // TODO Will always pick those of lowest complexity too (e.g. alphanumeric over those with one or more symbols)
-        val calculator = CharacterDistanceCalculator()
+        val calculator = CharacterDistanceCalculator(service)
         val wordsSorted = lines
             .mapIndexed { index, s -> index to calculator.sumUpDistance(s) }
             .sortedWith { o1, o2 -> o1.second - o2.second }

@@ -1,16 +1,13 @@
 package maxbe.tvpasswordhelper
 
-import maxbe.tvpasswordhelper.service.DisneyPlus
-import maxbe.tvpasswordhelper.service.Netflix
-import java.lang.IllegalArgumentException
+import maxbe.tvpasswordhelper.service.Keyboard
 
-class KeyboardPaneSwitcher(private val panes: Collection<IPane<Char>>) {
+class KeyboardPaneSwitcher(private val panes: Collection<IPane<Char>>, private val keyboard: Keyboard) {
 
-    private val serviceClass = Netflix // DisneyPlus
     val splitChar = '☒'
 
     private fun switchBack(char: Char): Iterable<Char> {
-        return listOf(char, splitChar, serviceClass.backwardSwitch(char))
+        return listOf(char, splitChar, keyboard.backwardSwitch(char))
     }
 
     fun insertSwitchCharacters(word: String) : String {
@@ -19,10 +16,11 @@ class KeyboardPaneSwitcher(private val panes: Collection<IPane<Char>>) {
 
     private fun mapToSequence(next: Char, last: String) : String {
         val lastOrDefault = last.ifEmpty { "anylowercase" }
-        val lastSubwordIndex = lastOrDefault.indexOfLast { serviceClass.switchCharacters.contains(it) } + 1
+        val lastSubwordIndex = lastOrDefault.indexOfLast { keyboard.isSwitch(it) } + 1
         val wordOnPane = last.substring(lastSubwordIndex)
 
         return when {
+            // TODO: This is hard to understand... But here it might be where we check if next.lowercase() can be found, which means holdForCaps would apply...
             panes.first { pane -> wordOnPane.all { pane.contains(it) }}.contains(next) -> next.toString()
             else -> mapToSwitchChars(wordOnPane, next) + next
         }
@@ -46,7 +44,7 @@ class KeyboardPaneSwitcher(private val panes: Collection<IPane<Char>>) {
     }
 
     internal fun explode(switchString: String) =
-        switchString.flatMap { if (serviceClass.switchCharacters.contains(it)) switchBack(it) else listOf(it) }
+        switchString.flatMap { if (keyboard.isSwitch(it)) switchBack(it) else listOf(it) }
 
 
 }

@@ -1,5 +1,6 @@
 package maxbe.tvpasswordhelper
 
+// TODO: Move to IPane? 
 data class ThreeRowPane<T>(override val switchChar: T, val row1: List<T>, val row2: List<T>, val row3: List<T>) :
     IPane<T> {
     override fun getRows() = listOf(row1, row2, row3)

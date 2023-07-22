@@ -1,6 +1,7 @@
 package maxbe.tvpasswordhelper
 
-import org.junit.jupiter.api.Assertions.*
+import maxbe.tvpasswordhelper.service.NetflixQwerty
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -41,7 +42,7 @@ internal class KeyboardPaneSwitcherTest {
 
     @BeforeEach
     fun setUp() {
-        switcher = KeyboardPaneSwitcher(listOf(lowerChars, upperChars, umlautChars))
+        switcher = KeyboardPaneSwitcher(listOf(lowerChars, upperChars, umlautChars), NetflixQwerty())
     }
 
     @Test
