@@ -12,7 +12,7 @@ class CharacterDistanceCalculator(val service: Service) {
         val switcher = KeyboardPaneSwitcher(calculators.map { it.pane }, service.keyboard())
         val switchString = switcher.insertSwitchCharacters(string)
         val explodedString = switcher.explode(switchString)
-        logger.info("Exploded string: $explodedString")
+        logger.fine("Exploded string: $explodedString")
         val wordList = explodedString.joinToString("").split(switcher.splitChar)
 
         // TODO Distance (0-4?) to the first char should be considered (cf. InputComfort)

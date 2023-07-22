@@ -47,4 +47,19 @@ class MenuTest {
         assertEquals(2, choice)
     }
 
+
+    @Test
+    fun menuCanSkipInvalidCharacters() {
+        val menu = Menu(
+            "real menu",
+            listOf(Option("One", 1))
+        )
+
+        val answer = "!a\t${SEP()}01"
+        val inputStream: InputStream = ByteArrayInputStream(answer.toByteArray())
+        val outputStream = ByteArrayOutputStream()
+        val choice = menu.spawnMenu(inputStream, PrintStream(outputStream))
+
+        assertEquals(1, choice)
+    }
 }
