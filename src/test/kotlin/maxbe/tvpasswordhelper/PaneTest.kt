@@ -1,11 +1,11 @@
 package maxbe.tvpasswordhelper
 
-import maxbe.tvpasswordhelper.ThreeRowPane
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-internal class ThreeRowPaneTest {
+internal class PaneTest {
 
     @BeforeEach
     fun setUp() {
