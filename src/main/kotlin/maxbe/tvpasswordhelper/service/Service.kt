@@ -2,15 +2,17 @@ package maxbe.tvpasswordhelper.service
 
 enum class Service {
     DisneyPlus,
-    Netflix
+    Netflix,
+    ParamountPlus
     ;
 
     fun keyboard(): Keyboard {
-        if (this == Netflix)
-            return NetflixQwerty()
-        if (this == DisneyPlus)
-            return DisneyPlusQwerty()
-        throw IllegalArgumentException()
+        return when {
+            this == Netflix -> NetflixQwerty()
+            this == DisneyPlus -> DisneyPlusQwerty()
+            this == ParamountPlus -> ParamountPlusQwerty()
+            else -> throw IllegalArgumentException()
+        }
     }
 
 }

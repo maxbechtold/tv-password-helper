@@ -31,7 +31,8 @@ private fun getServiceChoice(): Service {
         "Which service are you interested in?",
         listOf(
             Option("Netflix", Service.Netflix),
-            Option("Disney+", Service.DisneyPlus)
+            Option("Disney+", Service.DisneyPlus),
+            Option("Paramount+", Service.ParamountPlus)
         )
     )
     return serviceMenu.spawnMenu()

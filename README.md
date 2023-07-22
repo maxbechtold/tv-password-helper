@@ -42,7 +42,12 @@ You can copy it to any system which has a JRE (11 or later) and run the app with
 
 ## Limitations
 This tool is far from perfect, see the Issues for shortcomings or bugs.  
-For now, it supports the English Netflix keyboard layout (qwerty). Further layouts/languages might be added in the future, and also other popular TV apps.
+For now, it supports the following keyboard layouts:
+- Netflix (English/qwerty)
+- Disney+ (English/qwerty)
+- Paramount+ (English/qwerty)
+
+Further layouts/languages might be added in the future, and also other popular TV apps. Feel free to open an issue.
 
 ## Warning
 Passwords are sensitive data, so you should actually not trust this tool - you can however check the source code and see that the following is true
